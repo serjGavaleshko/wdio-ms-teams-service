@@ -25,6 +25,7 @@ export default class MsTeamsService implements Services.ServiceInstance {
     private _config: TestRunnerOptions;
     private readonly _failingTestsOnly: boolean;
     private readonly _message?: string;
+    private readonly _projectName?: string;
 
     constructor(serviceOptions: MsTeamsServiceOptions, capabilities: Capabilities, config: TestRunnerOptions) {
         this._webhook = new IncomingWebhook(serviceOptions.webhookURL, serviceOptions.timeout);
@@ -67,9 +68,9 @@ export default class MsTeamsService implements Services.ServiceInstance {
         this.testResultContainer.addTest(testName, testResult);
     }
 
-    // async afterScenario(world: ITestCaseHookParameter, result: Frameworks.PickleResult): Promise<void> {
-    //
-    // }
+    async afterScenario(world: ITestCaseHookParameter, result: Frameworks.PickleResult): Promise<void> {
+
+    }
     //
     // async afterFeature(uri: string, feature: Feature): Promise<void> {
     //
