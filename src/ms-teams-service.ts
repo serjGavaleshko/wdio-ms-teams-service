@@ -94,6 +94,7 @@ export default class MsTeamsService implements Services.ServiceInstance {
         const adaptiveCard = new AdaptiveCard(this.testResultContainer, projectName, gitlabRunLink);
         await this._webhook.send(adaptiveCard.toString());
     }
+
 }
 
 /**
