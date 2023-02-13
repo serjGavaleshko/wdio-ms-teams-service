@@ -26,6 +26,7 @@ export default class MsTeamsService implements Services.ServiceInstance {
     private readonly _failingTestsOnly: boolean;
     private readonly _message?: string;
     private readonly _projectName?: string;
+    private readonly _gitlabRunLink?: string;
 
     constructor(serviceOptions: MsTeamsServiceOptions, capabilities: Capabilities, config: TestRunnerOptions) {
         this._webhook = new IncomingWebhook(serviceOptions.webhookURL, serviceOptions.timeout);
@@ -76,8 +77,9 @@ export default class MsTeamsService implements Services.ServiceInstance {
     //
     // }
 
-    async after(): Promise<void> {
-        const message = this._message ? this._message : "An automated test run just completed";
+    async onComplete(): Promise<void> {
+        const projectName = this._projectName ? this._projectName : "CSP";
+        const gitlabRunLink = this._gitlabRunLink ? this._gitlabRunLink : "https://gitlab.webamg.com";
 
         if (this._failingTestsOnly) {
             if (this.testResultContainer.failedTests === 0) {
@@ -89,8 +91,7 @@ export default class MsTeamsService implements Services.ServiceInstance {
                 return;
             }
         }
-
-        const adaptiveCard = new AdaptiveCard(message, this.testResultContainer);
+        const adaptiveCard = new AdaptiveCard(this.testResultContainer, projectName, gitlabRunLink);
         await this._webhook.send(adaptiveCard.toString());
     }
 }

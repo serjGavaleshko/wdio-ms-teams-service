@@ -33,9 +33,9 @@ export default class TestResultContainer {
         if (!Object.prototype.hasOwnProperty.call(this.testResults, testName)) {
             this.testResults[testName] = [];
         }
-        console.log("THIS IS RESULT" + result)
-        this.testResults[testName].push(result);
-
+        if (!result.passed) {
+            this.testResults[testName].push(result);
+        }
         result.passed ? (this.passedTests += 1) : (this.failedTests += 1);
         this.totalTests += 1;
     }

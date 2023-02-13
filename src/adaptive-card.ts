@@ -61,10 +61,10 @@ interface ITextRun {
 export class AdaptiveCard {
     private readonly _card: IAdaptiveCard;
 
-    constructor(message: string, resultContainer: TestResultContainer) {
+    constructor(resultContainer: TestResultContainer, projectName: string, gitlabLink: string) {
         const body: IAdaptiveCardContent["body"] = [];
-        body.push(AdaptiveCard._generateTextBlock("Automated test results | WebdriverIO", true, "bolder"));
-        body.push(AdaptiveCard._generateTextBlock(message, true, "default"));
+        body.push(AdaptiveCard._generateTextBlock(projectName, true, "bolder"));
+        body.push(AdaptiveCard._generateTextBlock(gitlabLink, true, "default"));
 
         for (const test of resultContainer.testNames) {
             const results = resultContainer.testResults[test];
